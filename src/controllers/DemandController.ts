@@ -10,13 +10,12 @@ class DemandController {
     
     async create(request: Request, response: Response, next: NextFunction){
         
-        const { name, description, concluded_at, profiles, stages, usersDemands, prioridade } = request.body;
+        const { name, description, concluded_at, profiles, stages, usersDemands } = request.body;
 
         const schema = yup.object().shape({
             name: yup.string(). required(),
             description: yup.string().required(),
             concluded_at: yup.date(),
-            prioridade: yup.number().required(),
             profiles: yup.array().of(yup.object().shape({
                 id: yup.string()
             })),
@@ -49,7 +48,7 @@ class DemandController {
             profiles,
             stages,
             usersDemands,
-            prioridade,
+            
         });
 
         await resourceDemandRepository.save(demand);
@@ -81,15 +80,13 @@ class DemandController {
         return response.json(one);
     }
     async update(request: Request, response: Response, next: NextFunction){
-        const { name, description, concluded_at, profiles, stages, usersDemands,prioridade, column } = request.body;
+        const { name, description, concluded_at, profiles, stages, usersDemands } = request.body;
         const id = request.params.id;
  
         const schema = yup.object().shape({
             name: yup.string().required(),
             description: yup.string(),
             concluded_at: yup.date(),
-            prioridade: yup.number().required(),
-            column: yup.string().required(),
             profiles: yup.array().of(yup.object().shape({
                 id: yup.string()
             })),
@@ -136,8 +133,6 @@ class DemandController {
             description,
             concluded_at,
             usersDemands,
-            column,
-            prioridade,
         });
 
         return response.status(201).json(demand);

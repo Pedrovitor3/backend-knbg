@@ -13,11 +13,6 @@ export class Demand {
 
     @Column()
     name: string;
-
-
-    @Column()
-    prioridade: number;
-
     
 
     @Column({nullable: true})
@@ -45,6 +40,7 @@ export class Demand {
       eager: true
     })
     usersDemands: UsersDemand[];
+    
 
     @ManyToOne((type) => Phase, (phase) => phase.demands)
     phase: Phase;
