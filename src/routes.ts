@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ProfileController } from './controllers/ProfileController';
-import { verifyToken } from './Utils/functionsToken';
+import { } from './Utils/functionsToken';
 import { DemandController } from './controllers/DemandController';
 import { StageController } from './controllers/StageController';
 import { TagController } from './controllers/TagController';
@@ -30,12 +30,12 @@ const cardController = new CardController();
 */
 
 //PROFILE
-router.post("/profile",verifyToken, profileController.create);
-router.get("/profile",verifyToken, profileController.all);
-router.get("/profile/:id",verifyToken, profileController.one);
-router.put("/profile/:id",verifyToken, profileController.update);
-router.delete("/profile/:id",verifyToken, profileController.remove);
-router.patch("/profile/:id",verifyToken, profileController.restore);
+router.post("/profile", profileController.create);
+router.get("/profile", profileController.all);
+router.get("/profile/:id", profileController.one);
+router.put("/profile/:id", profileController.update);
+router.delete("/profile/:id", profileController.remove);
+router.patch("/profile/:id", profileController.restore);
 
 //PHASE
 router.post("/phase", phaseController.create);
@@ -55,45 +55,45 @@ router.delete("/demand/:id", demandController.remove);
 router.patch("/demand/:id", demandController.restore);
 
 //STAGE
-router.post("/stage",verifyToken, stageController.create);
-router.get("/stage",verifyToken, stageController.all);
-router.get("/stage/:id",verifyToken, stageController.one);
-router.put("/stage/:id",verifyToken, stageController.update);
-router.delete("/stage/:id",verifyToken, stageController.remove);
-router.patch("/stage/:id",verifyToken, stageController.restore);
+router.post("/stage", stageController.create);
+router.get("/stage", stageController.all);
+router.get("/stage/:id", stageController.one);
+router.put("/stage/:id", stageController.update);
+router.delete("/stage/:id", stageController.remove);
+router.patch("/stage/:id", stageController.restore);
 
 //TAG
-router.post("/tag",verifyToken, tagController.create);
-router.get("/tag",verifyToken, tagController.all);
-router.get("/tag/:id",verifyToken, tagController.one);
-router.put("/tag/:id",verifyToken, tagController.update);
-router.delete("/tag/:id",verifyToken, tagController.remove);
-router.patch("/tag/:id",verifyToken, tagController.restore);
+router.post("/tag", tagController.create);
+router.get("/tag", tagController.all);
+router.get("/tag/:id", tagController.one);
+router.put("/tag/:id", tagController.update);
+router.delete("/tag/:id", tagController.remove);
+router.patch("/tag/:id", tagController.restore);
 
 //ANSWER
-router.post("/answer",verifyToken, answerController.create);
-router.get("/answer",verifyToken, answerController.all);
-router.get("/answer/:id",verifyToken, answerController.one);
-router.put("/answer/:id",verifyToken, answerController.update);
-router.delete("/answer/:id",verifyToken, answerController.remove);
-router.patch("/answer/:id",verifyToken, answerController.restore);
+router.post("/answer", answerController.create);
+router.get("/answer", answerController.all);
+router.get("/answer/:id", answerController.one);
+router.put("/answer/:id", answerController.update);
+router.delete("/answer/:id", answerController.remove);
+router.patch("/answer/:id", answerController.restore);
 
 //COMMENT
-router.post("/comment",verifyToken, commentController.create);
-router.get("/comment",verifyToken, commentController.all);
-router.get("/comment/:id",verifyToken, commentController.one);
-router.put("/comment/:id",verifyToken, commentController.update);
-router.delete("/comment/:id",verifyToken, commentController.remove);
-router.patch("/comment/:id",verifyToken, commentController.restore);
+router.post("/comment", commentController.create);
+router.get("/comment", commentController.all);
+router.get("/comment/:id", commentController.one);
+router.put("/comment/:id", commentController.update);
+router.delete("/comment/:id", commentController.remove);
+router.patch("/comment/:id", commentController.restore);
 
 
 //CARD
-router.post("/card",verifyToken, cardController.create);
-router.get("/card",verifyToken, cardController.all);
-router.get("/card/:id",verifyToken, cardController.one);
-router.put("/card/:id",verifyToken, cardController.update);
-router.delete("/card/:id",verifyToken, cardController.remove);
-router.patch("/card/:id",verifyToken, cardController.restore);
+router.post("/card", cardController.create);
+router.get("/card", cardController.all);
+router.get("/card/:id", cardController.one);
+router.put("/card/:id", cardController.update);
+router.delete("/card/:id", cardController.remove);
+router.patch("/card/:id", cardController.restore);
 
 
 

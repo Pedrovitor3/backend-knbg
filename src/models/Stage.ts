@@ -13,7 +13,9 @@ export class Stage {
   name: string;
 
 
-  @ManyToOne(() => Demand,(demand) => demand.stages)
+  @ManyToOne(() => Demand,(demand) => demand.stages, {
+    eager: true
+  })
   demand: Demand;
 
   @OneToMany((type)=> Card,(card) => card.stage, {

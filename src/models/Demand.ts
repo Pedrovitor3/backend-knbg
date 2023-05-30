@@ -30,9 +30,7 @@ export class Demand {
     profiles: Profile[];
 
 
-    @OneToMany((type)=> Stage,(stage) => stage.demand, {
-      eager: true
-    })
+    @OneToMany((type)=> Stage,(stage) => stage.demand)
     stages: Stage[];
 
 
