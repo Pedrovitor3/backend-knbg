@@ -7,12 +7,10 @@ import { TagController } from './controllers/TagController';
 import { AnswerController } from './controllers/AnswerController';
 import { CommentController } from './controllers/CommentController';
 import { CardController } from './controllers/CardController';
-import { PhaseController } from './controllers/PhaseController';
 
 
 const router = Router();
 const profileController = new ProfileController();
-const phaseController = new PhaseController();
 const demandController = new DemandController();
 const stageController = new StageController();
 const tagController = new TagController();
@@ -38,13 +36,6 @@ router.delete("/profile/:id", profileController.remove);
 router.patch("/profile/:id", profileController.restore);
 
 //PHASE
-router.post("/phase", phaseController.create);
-router.get("/phase", phaseController.all);
-router.get("/phase/:id", phaseController.one);
-router.put("/phase/:id", phaseController.update);
-router.delete("/phase/:id", phaseController.remove);
-router.patch("/phase/:id", phaseController.restore);
-
 
 //DEMAND
 router.post("/demand", demandController.create);

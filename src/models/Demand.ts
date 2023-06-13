@@ -1,9 +1,16 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinTable, ManyToMany,  OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from 'uuid'; 
 import { Profile } from "./Profile";
 import { Stage } from "./Stage";
 import { UsersDemand } from "./UsersDemand";
-import { Phase } from "./Phase";
+
+enum Status {
+  aguardando = 'aguardando',
+  executando = 'executando',
+  concluido = 'concluido',
+  pendente = 'pendente',
+  recusado = 'recusado',
+}
 
 
 @Entity("demand")
@@ -21,6 +28,8 @@ export class Demand {
     @Column({ type: 'varchar' })
     description: string;
 
+    @Column({type: 'enum', enum: Status, default: Status.recusado })
+    status: Status;
 
 
     @ManyToMany((type) => Profile, (profile) => profile.demands, {
@@ -30,7 +39,7 @@ export class Demand {
     profiles: Profile[];
 
 
-    @OneToMany((type)=> Stage,(stage) => stage.demand)
+    @OneToMany((type)=> Stage,(stage) => stage.demand, {cascade: true})
     stages: Stage[];
 
 
@@ -39,16 +48,6 @@ export class Demand {
     })
     usersDemands: UsersDemand[];
     
-
-    @ManyToOne((type) => Phase, (phase) => phase.demands)
-    phase: Phase;
-
-    
-
-
-    //sso
-    // id_usuario_demandante
-    // id_setor
 
     @DeleteDateColumn()
     deleted_at: Date;

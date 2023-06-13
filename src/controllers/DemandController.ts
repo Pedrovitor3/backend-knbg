@@ -10,11 +10,12 @@ class DemandController {
     
     async create(request: Request, response: Response, next: NextFunction){
         
-        const { name, description, concluded_at, profiles, stages, usersDemands } = request.body;
+        const { name, description, status, concluded_at, profiles, stages, usersDemands } = request.body;
 
         const schema = yup.object().shape({
             name: yup.string(). required(),
             description: yup.string().required(),
+            status:yup.string().oneOf(['aguardando', 'executando', 'concluido', 'pendente', 'recusado']), 
             concluded_at: yup.date(),
             profiles: yup.array().of(yup.object().shape({
                 id: yup.string()
@@ -44,6 +45,7 @@ class DemandController {
         const demand = resourceDemandRepository.create({
             name,
             description,
+            status,
             concluded_at,
             profiles,
             stages,
@@ -80,13 +82,14 @@ class DemandController {
         return response.json(one);
     }
     async update(request: Request, response: Response, next: NextFunction){
-        const { name, description, concluded_at, profiles, stages, usersDemands } = request.body;
+        const { name, description, status, concluded_at, profiles, stages, usersDemands } = request.body;
         const id = request.params.id;
  
         const schema = yup.object().shape({
             name: yup.string().required(),
             description: yup.string(),
             concluded_at: yup.date(),
+            status:yup.string().oneOf(['aguardando', 'executando', 'concluido', 'pendente', 'recusado']), 
             profiles: yup.array().of(yup.object().shape({
                 id: yup.string()
             })),
@@ -131,6 +134,7 @@ class DemandController {
         }, {
             name,
             description,
+            status,
             concluded_at,
             usersDemands,
         });

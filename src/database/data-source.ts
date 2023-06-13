@@ -8,7 +8,6 @@ import { Answer } from '../models/Answer';
 import { Comment } from '../models/Comment';
 import { Card } from '../models/Card';
 import { UsersDemand } from '../models/UsersDemand';
-import { Phase } from '../models/Phase';
 require('dotenv').config();
 
 //import { CreateUsuarios1656685284937 } from '../database/migrations/1656685284937-CreateUsuarios';
@@ -22,7 +21,7 @@ export const APPDataSource = new DataSource({
   database: process.env.DB_DATABASE,
   synchronize: true,
   logging: false,
-  entities: [Profile, Phase, Demand, Stage, Tag, Answer, Comment, Card, UsersDemand],
+  entities: [Profile, Demand, Stage, Tag, Answer, Comment, Card, UsersDemand],
   //  migrations: [CreateUsuarios1656685284937],
   subscribers: [],
 });
