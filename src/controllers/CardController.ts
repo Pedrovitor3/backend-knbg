@@ -9,18 +9,13 @@ class CardController {
   
   async create(request: Request, response: Response, next: NextFunction) {
     
-    const { name, description, concluded_at, tags, comments } = request.body;
+    const { name, description, concluded_at, stage } = request.body;
 
     const schema = yup.object().shape({
-      description: yup.string().required(),
       name: yup.string().required(),
+      stage: yup.string().required(),
+      description: yup.string().required(),
       concluded_at: yup.date(),
-      tags: yup.array().of(yup.object().shape({
-        id: yup.string()
-      })),
-      comments: yup.array().of(yup.object().shape({
-        id: yup.string()
-      })),
     });
 
     try {
@@ -39,10 +34,10 @@ class CardController {
     
     const card = resourceCardRepository.create({
       name,
+      stage,
       description,
       concluded_at,
-      tags,
-      comments,
+      
     });
 
     await resourceCardRepository.save(card);
@@ -55,8 +50,7 @@ class CardController {
 
     const all = await resourceCardRepository.find({
       relations:{
-        tags: true,
-        comments: true,
+        
       }
     });
 
@@ -74,19 +68,14 @@ class CardController {
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { name, description, concluded_at, tags, comments} = request.body;
+    const { name, description, concluded_at,stage } = request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
       name: yup.string().required(),
       description: yup.string().required(),
       concluded_at: yup.date(),
-      tags: yup.array().of(yup.object().shape({
-        id: yup.string()
-      })),
-      comments: yup.array().of(yup.object().shape({
-        id: yup.string()
-      })),
+      stage: yup.string().required(),
     });
 
     try {
@@ -100,8 +89,7 @@ class CardController {
     const cardFull = await resourceCardRepository.findOne({
       where: {id:id},
       relations:{
-        tags: true,
-        comments: true,
+        
       },
     });
 
@@ -109,8 +97,7 @@ class CardController {
       return response.status(400).json({status: "cartão não encontrado"})
     }
 
-    cardFull.tags = tags;
-    cardFull.comments = comments;
+   
 
     await resourceCardRepository.save(cardFull);
 
@@ -118,6 +105,7 @@ class CardController {
       id
     }, {
       name,
+      stage,
       description,
       concluded_at,
     });

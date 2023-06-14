@@ -20,7 +20,6 @@ export class Demand {
 
     @Column()
     name: string;
-    
 
     @Column({nullable: true})
     concluded_at:Date;
@@ -32,10 +31,7 @@ export class Demand {
     status: Status;
 
 
-    @ManyToMany((type) => Profile, (profile) => profile.demands, {
-      eager: true
-    })
-    @JoinTable()
+    @ManyToMany((type) => Profile, (profile) => profile.demands)
     profiles: Profile[];
 
 

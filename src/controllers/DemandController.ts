@@ -10,7 +10,7 @@ class DemandController {
     
     async create(request: Request, response: Response, next: NextFunction){
         
-        const { name, description, status, concluded_at, profiles, stages, usersDemands } = request.body;
+        const { name, description, status, concluded_at, profiles,  usersDemands } = request.body;
 
         const schema = yup.object().shape({
             name: yup.string(). required(),
@@ -18,9 +18,6 @@ class DemandController {
             status:yup.string().oneOf(['aguardando', 'executando', 'concluido', 'pendente', 'recusado']), 
             concluded_at: yup.date(),
             profiles: yup.array().of(yup.object().shape({
-                id: yup.string()
-            })),
-            stages: yup.array().of(yup.object().shape({
                 id: yup.string()
             })),
             usersDemands: yup.array().of(yup.object().shape({
@@ -48,7 +45,6 @@ class DemandController {
             status,
             concluded_at,
             profiles,
-            stages,
             usersDemands,
             
         });
@@ -62,11 +58,7 @@ class DemandController {
         const resourceDemandRepository = APPDataSource.getRepository(Demand);
 
         const all = await resourceDemandRepository.find({
-            relations: {
-                profiles: true,
-                stages: true,
-                usersDemands: true,
-            },
+           
         });
 
         return response.json(all);
@@ -82,7 +74,7 @@ class DemandController {
         return response.json(one);
     }
     async update(request: Request, response: Response, next: NextFunction){
-        const { name, description, status, concluded_at, profiles, stages, usersDemands } = request.body;
+        const { name, description, status, concluded_at, profiles,  usersDemands } = request.body;
         const id = request.params.id;
  
         const schema = yup.object().shape({
@@ -93,9 +85,7 @@ class DemandController {
             profiles: yup.array().of(yup.object().shape({
                 id: yup.string()
             })),
-            stages: yup.array().of(yup.object().shape({
-                id: yup.string()
-            })),
+            
             usersDemands: yup.array().of(yup.object().shape({
                 id: yup.string()
             })),
@@ -114,7 +104,6 @@ class DemandController {
             where:{ id: id},
             relations:{
                 profiles: true,
-                stages: true,
                 usersDemands: true,
             },
         });
@@ -124,7 +113,6 @@ class DemandController {
         }
 
         demandFull.profiles = profiles;
-        demandFull.stages = stages;
         demandFull.usersDemands = usersDemands;
 
         await resourceDemandRepository.save(demandFull);

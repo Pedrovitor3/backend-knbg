@@ -12,9 +12,8 @@ export class Stage {
   @Column() 
   name: string;
 
-
   @ManyToOne(() => Demand,(demand) => demand.stages, {
-    eager: true
+     nullable: false
   })
   demand: Demand;
 

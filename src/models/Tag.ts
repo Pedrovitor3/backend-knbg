@@ -14,7 +14,7 @@ export class Tag {
   @Column()
   cor:string;
   
-  @ManyToMany(() => Card, (card) => card.tags)
+  @ManyToMany(() => Card, (card) => card.tags, {nullable: false})
   cards: Card[];
 
   //sso

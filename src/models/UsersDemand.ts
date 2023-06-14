@@ -15,8 +15,6 @@ export class UsersDemand {
   @ManyToOne(() => Profile, (profile) =>profile.usersDemands)
   profile: Profile;
   
- //sso
- //id_setor: string;
 
   @DeleteDateColumn()
   deleted_at: Date;

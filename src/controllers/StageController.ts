@@ -10,13 +10,11 @@ class StageController {
   
   async create(request: Request, response: Response, next: NextFunction) {
     
-    const { name, cards } = request.body;
+    const { name, demand } = request.body;
 
     const schema = yup.object().shape({
       name: yup.string().required(),
-      cards: yup.array().of(yup.object().shape({
-        id: yup.string()
-      })),
+      demand: yup.string().required(),
     });
 
     try {
@@ -35,7 +33,7 @@ class StageController {
     
     const stage = resourceStageRepository.create({
       name,
-      cards,
+      demand,
     });
 
     await resourceStageRepository.save(stage);
@@ -48,7 +46,7 @@ class StageController {
 
     const all = await resourceStageRepository.find({
       relations:{
-        cards: true,
+        demand: true,
       }
     });
 
@@ -66,14 +64,12 @@ class StageController {
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { name, cards} = request.body;
+    const { name, demand} = request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
       name: yup.string().required(),
-      cards: yup.array().of(yup.object().shape({
-        id: yup.string()
-      })),
+      demand: yup.string().required(),
     });
 
     try {
@@ -87,7 +83,7 @@ class StageController {
     const stageFull = await resourceStageRepository.findOne({
       where: {id:id},
       relations:{
-        cards:true,
+        demand:true,
       },
     })
   
@@ -95,14 +91,14 @@ class StageController {
       return response.status(400).json({status: "etapa não encontrada"})
     }
 
-    stageFull.cards = cards;
+    stageFull.demand = demand;
 
     await resourceStageRepository.save(stageFull);
 
     const stage = await resourceStageRepository.update({
       id
     }, {
-      name,
+      demand,
     });
 
     return response.status(201).json(stage);

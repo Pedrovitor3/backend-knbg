@@ -15,9 +15,7 @@ export class Answer {
   @ManyToOne(() => Comment, (comment) => comment.answers)
   comment: Comment;
 
-    //sso
-    // id_setor
-    // id_user
+ 
 
   @DeleteDateColumn()
   deleted_at: Date;
