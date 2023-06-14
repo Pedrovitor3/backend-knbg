@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
 import { Card } from "./Card";
 
@@ -14,13 +14,8 @@ export class Tag {
   @Column()
   cor:string;
   
-  @ManyToMany(() => Card, (card) => card.tags, {nullable: false})
+  @OneToMany(() => Card, (card) => card.tags)
   cards: Card[];
-
-  //sso
-    // @Column()
-    // id_setor
-    
 
   @DeleteDateColumn()
   deleted_at: Date;

@@ -50,7 +50,7 @@ class CardController {
 
     const all = await resourceCardRepository.find({
       relations:{
-        
+          stage: true,  
       }
     });
 
@@ -86,10 +86,16 @@ class CardController {
 
     const resourceCardRepository = APPDataSource.getRepository(Card);
 
+    const cardAlreadyExists = await resourceCardRepository.findOne({ where: { name: name } });
+
+    if (cardAlreadyExists) {
+      return response.status(400).json({status: "cartão já existe!"});
+    }
+
     const cardFull = await resourceCardRepository.findOne({
       where: {id:id},
       relations:{
-        
+       stage: true,  
       },
     });
 

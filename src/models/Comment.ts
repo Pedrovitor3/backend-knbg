@@ -1,7 +1,6 @@
  import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from 'uuid'; 
 import { Card } from "./Card";
-import { Answer } from "./Answer";
 
 @Entity("comment") 
 export class Comment {
@@ -12,13 +11,8 @@ export class Comment {
   @Column({ type: 'text'})
   description: string;
 
-  @ManyToOne(() => Card, (card) => card.comments)
+  @ManyToOne(() => Card, (card) => card.comments, {nullable: false})
   card: Card;
-
-  @OneToMany(() => Answer, (answer) => answer.comment, {
-    eager: true
-  })
-  answers: Answer[];
 
 
   @DeleteDateColumn()

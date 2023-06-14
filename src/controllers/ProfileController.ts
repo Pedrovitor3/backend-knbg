@@ -8,14 +8,12 @@ import jwt from 'jsonwebtoken';
 class ProfileController {
   
   async create(request: Request, response: Response, next: NextFunction) {
-    const { name, demands, usersDemands } = request.body;
+    const { name, demands } = request.body;
 
     const schema = yup.object().shape({
       name: yup.string().required(),
       demands: yup.string(),
-      usersDemands: yup.array().of(yup.object().shape({
-        id: yup.string()
-      })),
+     
     });
 
     try {
@@ -35,7 +33,7 @@ class ProfileController {
     const profile = profileRepository.create({
       name,
       demands,
-      usersDemands,
+      
     });
 
     await profileRepository.save(profile);
@@ -62,15 +60,12 @@ class ProfileController {
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { name, demands, usersDemands } = request.body;
+    const { name, demands } = request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
       name: yup.string().required(),
       demands: yup.string(),
-      usersDemands: yup.array().of(yup.object().shape({
-        id: yup.string()
-        })),
     });
 
     try {
@@ -83,16 +78,13 @@ class ProfileController {
 
     const profileFull = await profileRepository.findOne({
       where:{ id: id},
-      relations:{
-        usersDemands: true,
-      },
+      
     });
 
     if(!profileFull) {
         return response.status(400).json({status: "perfil não encontrada"});
     }
 
-    profileFull.usersDemands = usersDemands;
 
     await profileRepository.save(profileFull);
 

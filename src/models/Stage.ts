@@ -21,10 +21,6 @@ export class Stage {
     eager: true
   })
   cards: Card[]; 
-   
-    // @Column()
-    // id_setor
-    
 
   @DeleteDateColumn()
   deleted_at: Date;

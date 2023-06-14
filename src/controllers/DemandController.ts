@@ -10,19 +10,13 @@ class DemandController {
     
     async create(request: Request, response: Response, next: NextFunction){
         
-        const { name, description, status, concluded_at, profiles,  usersDemands } = request.body;
+        const { name, description, status, concluded_at} = request.body;
 
         const schema = yup.object().shape({
             name: yup.string(). required(),
             description: yup.string().required(),
             status:yup.string().oneOf(['aguardando', 'executando', 'concluido', 'pendente', 'recusado']), 
-            concluded_at: yup.date(),
-            profiles: yup.array().of(yup.object().shape({
-                id: yup.string()
-            })),
-            usersDemands: yup.array().of(yup.object().shape({
-                id: yup.string()
-            })),
+            concluded_at: yup.date(),   
         });
 
         try{
@@ -43,10 +37,7 @@ class DemandController {
             name,
             description,
             status,
-            concluded_at,
-            profiles,
-            usersDemands,
-            
+            concluded_at,    
         });
 
         await resourceDemandRepository.save(demand);
@@ -57,9 +48,7 @@ class DemandController {
     async all(reques: Request, response: Response, next: NextFunction) {
         const resourceDemandRepository = APPDataSource.getRepository(Demand);
 
-        const all = await resourceDemandRepository.find({
-           
-        });
+        const all = await resourceDemandRepository.find();
 
         return response.json(all);
     }
@@ -74,7 +63,7 @@ class DemandController {
         return response.json(one);
     }
     async update(request: Request, response: Response, next: NextFunction){
-        const { name, description, status, concluded_at, profiles,  usersDemands } = request.body;
+        const { name, description, status, concluded_at } = request.body;
         const id = request.params.id;
  
         const schema = yup.object().shape({
@@ -82,13 +71,7 @@ class DemandController {
             description: yup.string(),
             concluded_at: yup.date(),
             status:yup.string().oneOf(['aguardando', 'executando', 'concluido', 'pendente', 'recusado']), 
-            profiles: yup.array().of(yup.object().shape({
-                id: yup.string()
-            })),
-            
-            usersDemands: yup.array().of(yup.object().shape({
-                id: yup.string()
-            })),
+           
             });
 
         try {
@@ -100,20 +83,19 @@ class DemandController {
         
         const resourceDemandRepository = APPDataSource.getRepository(Demand);
 
+        const demandAlreadyExists = await resourceDemandRepository.findOne({ where: { name: name } });
+
+        if (demandAlreadyExists) {
+          return response.status(400).json({status: "demanda já existe!"});
+        }
+
         const demandFull = await resourceDemandRepository.findOne({
             where:{ id: id},
-            relations:{
-                profiles: true,
-                usersDemands: true,
-            },
         });
 
         if(!demandFull) {
             return response.status(400).json({status: "demanda não encontrada"});
         }
-
-        demandFull.profiles = profiles;
-        demandFull.usersDemands = usersDemands;
 
         await resourceDemandRepository.save(demandFull);
 
@@ -123,8 +105,7 @@ class DemandController {
             name,
             description,
             status,
-            concluded_at,
-            usersDemands,
+            concluded_at, 
         });
 
         return response.status(201).json(demand);

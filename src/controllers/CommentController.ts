@@ -9,13 +9,11 @@ class CommentController {
   
   async create(request: Request, response: Response, next: NextFunction) {
     
-    const { description, answers } = request.body;
+    const { description } = request.body;
 
     const schema = yup.object().shape({
       description: yup.string().required(),
-      answers: yup.array().of(yup.object().shape({
-        id: yup.string()
-      })),
+      
     });
 
     try {
@@ -34,7 +32,6 @@ class CommentController {
     
     const comment = resourceCommentRepository.create({
       description,
-      answers,
     });
 
     await resourceCommentRepository.save(comment);
@@ -45,11 +42,7 @@ class CommentController {
   async all(request: Request, response: Response, next: NextFunction) {
     const resourceCommentRepository = APPDataSource.getRepository(Comment);
 
-    const all = await resourceCommentRepository.find({
-      relations:{
-        answers: true,
-      }
-    });
+    const all = await resourceCommentRepository.find();
 
     return response.json(all);
   }
@@ -65,14 +58,12 @@ class CommentController {
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { description, answers} = request.body;
+    const { description} = request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
       description: yup.string().required(),
-      answers: yup.array().of(yup.object().shape({
-        id: yup.string()
-      })),
+     
     });
 
     try {
@@ -85,16 +76,11 @@ class CommentController {
 
     const commentFull = await resourceCommentRepository.findOne({
       where:{id: id},
-      relations:{
-        answers: true,
-      }
     });
 
     if(!commentFull){
       return response.status(400).json({status: "comentário não econtrado"});
     }
-
-    commentFull.answers = answers;
 
     await resourceCommentRepository.save(commentFull);
 

@@ -35,7 +35,7 @@ export class Demand {
     profiles: Profile[];
 
 
-    @OneToMany((type)=> Stage,(stage) => stage.demand, {cascade: true})
+    @OneToMany((type)=> Stage,(stage) => stage.demand)
     stages: Stage[];
 
 
