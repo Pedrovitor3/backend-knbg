@@ -25,11 +25,11 @@ class StageController {
 
     const resourceStageRepository = APPDataSource.getRepository(Stage);
 
-    const stageAlreadyExists = await resourceStageRepository.findOne({ where: { name: name } });
+   // const stageAlreadyExists = await resourceStageRepository.findOne({ where: { name: name } });
 
-    if (stageAlreadyExists) {
-      return response.status(400).json({status: "etapa já existe!"});
-    }
+ //   if (stageAlreadyExists) {
+ //     return response.status(400).json({status: "etapa já existe!"});
+ //   }
     
     const stage = resourceStageRepository.create({
       name,

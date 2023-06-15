@@ -17,9 +17,7 @@ export class Stage {
   })
   demand: Demand;
 
-  @OneToMany((type)=> Card,(card) => card.stage, {
-    eager: true
-  })
+  @OneToMany((type)=> Card,(card) => card.stage, {eager: true})
   cards: Card[]; 
 
   @DeleteDateColumn()

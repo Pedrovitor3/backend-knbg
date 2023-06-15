@@ -4,7 +4,6 @@ import { Profile } from '../models/Profile';
 import { Demand } from '../models/Demand';
 import { Stage } from '../models/Stage';
 import { Tag } from '../models/Tag';
-import { Answer } from '../models/Answer';
 import { Comment } from '../models/Comment';
 import { Card } from '../models/Card';
 import { UsersDemand } from '../models/UsersDemand';
@@ -21,7 +20,7 @@ export const APPDataSource = new DataSource({
   database: process.env.DB_DATABASE,
   synchronize: true,
   logging: false,
-  entities: [Profile, Demand, Stage, Tag, Answer, Comment, Card, UsersDemand],
+  entities: [Profile, Demand, Stage, Tag,  Comment, Card, UsersDemand],
   //  migrations: [CreateUsuarios1656685284937],
   subscribers: [],
 });

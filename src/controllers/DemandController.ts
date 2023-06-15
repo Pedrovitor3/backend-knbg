@@ -69,9 +69,8 @@ class DemandController {
         const schema = yup.object().shape({
             name: yup.string().required(),
             description: yup.string(),
-            concluded_at: yup.date(),
             status:yup.string().oneOf(['aguardando', 'executando', 'concluido', 'pendente', 'recusado']), 
-           
+            concluded_at: yup.date(),
             });
 
         try {
@@ -83,12 +82,7 @@ class DemandController {
         
         const resourceDemandRepository = APPDataSource.getRepository(Demand);
 
-        const demandAlreadyExists = await resourceDemandRepository.findOne({ where: { name: name } });
-
-        if (demandAlreadyExists) {
-          return response.status(400).json({status: "demanda já existe!"});
-        }
-
+       
         const demandFull = await resourceDemandRepository.findOne({
             where:{ id: id},
         });

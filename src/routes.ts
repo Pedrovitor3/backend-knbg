@@ -4,7 +4,6 @@ import { } from './Utils/functionsToken';
 import { DemandController } from './controllers/DemandController';
 import { StageController } from './controllers/StageController';
 import { TagController } from './controllers/TagController';
-import { AnswerController } from './controllers/AnswerController';
 import { CommentController } from './controllers/CommentController';
 import { CardController } from './controllers/CardController';
 
@@ -14,7 +13,6 @@ const profileController = new ProfileController();
 const demandController = new DemandController();
 const stageController = new StageController();
 const tagController = new TagController();
-const answerController = new AnswerController();
 const commentController = new CommentController();
 const cardController = new CardController();
 
@@ -60,14 +58,6 @@ router.get("/tag/:id", tagController.one);
 router.put("/tag/:id", tagController.update);
 router.delete("/tag/:id", tagController.remove);
 router.patch("/tag/:id", tagController.restore);
-
-//ANSWER
-router.post("/answer", answerController.create);
-router.get("/answer", answerController.all);
-router.get("/answer/:id", answerController.one);
-router.put("/answer/:id", answerController.update);
-router.delete("/answer/:id", answerController.remove);
-router.patch("/answer/:id", answerController.restore);
 
 //COMMENT
 router.post("/comment", commentController.create);

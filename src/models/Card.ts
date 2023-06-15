@@ -25,7 +25,7 @@ export class Card {
   @JoinTable()
   tags: Tag[];
 
-  @ManyToOne(() => Stage,(stage) => stage.cards, {nullable: false})
+  @ManyToOne(() => Stage,(stage) => stage.cards, { nullable: false})
   stage: Stage;
 
   @OneToMany(() => Comment, (comment) => comment.card, {

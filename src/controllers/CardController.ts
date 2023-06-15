@@ -13,7 +13,8 @@ class CardController {
 
     const schema = yup.object().shape({
       name: yup.string().required(),
-      stage: yup.string().required(),
+      stage: yup.object().shape({
+        id: yup.string()}),
       description: yup.string().required(),
       concluded_at: yup.date(),
     });
@@ -62,20 +63,25 @@ class CardController {
     
     const { id } = request.params;
 
-    const one = await resourceCardRepository.findOne({ where: { id: id } });
+    const one = await resourceCardRepository.findOne({ where: { id: id }, relations: {
+      stage: true,
+    } });
 
     return response.json(one);
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { name, description, concluded_at,stage } = request.body;
+    const { name, description, concluded_at, stage } = request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
       name: yup.string().required(),
       description: yup.string().required(),
       concluded_at: yup.date(),
-      stage: yup.string().required(),
+      stage: yup.object().shape({
+        id: yup.string(),
+       
+      }).required(),
     });
 
     try {
@@ -86,11 +92,7 @@ class CardController {
 
     const resourceCardRepository = APPDataSource.getRepository(Card);
 
-    const cardAlreadyExists = await resourceCardRepository.findOne({ where: { name: name } });
-
-    if (cardAlreadyExists) {
-      return response.status(400).json({status: "cartão já existe!"});
-    }
+    
 
     const cardFull = await resourceCardRepository.findOne({
       where: {id:id},
@@ -102,8 +104,6 @@ class CardController {
     if(!cardFull){
       return response.status(400).json({status: "cartão não encontrado"})
     }
-
-   
 
     await resourceCardRepository.save(cardFull);
 
