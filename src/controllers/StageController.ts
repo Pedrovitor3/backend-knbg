@@ -80,15 +80,11 @@ class StageController {
 
     const resourceStageRepository = APPDataSource.getRepository(Stage);
 
-    const stageAlreadyExists = await resourceStageRepository.findOne({ where: { name: name } });
-
-    if (stageAlreadyExists) {
-      return response.status(400).json({status: "etapa já existe!"});
-    }
-
+   
     const stageFull = await resourceStageRepository.findOne({
       where: {id:id},
       relations:{
+        
         demand:true,
       },
     })
@@ -97,13 +93,13 @@ class StageController {
       return response.status(400).json({status: "etapa não encontrada"})
     }
 
-    stageFull.demand = demand;
-
+   
     await resourceStageRepository.save(stageFull);
 
     const stage = await resourceStageRepository.update({
       id
     }, {
+      name,
       demand,
     });
 
@@ -118,7 +114,6 @@ class StageController {
     if (!stageToRemove) {
       return response.status(400).json({status: "etapa não encontrada!"});
     }
-      
 
     const deleteResponse = await resourceStageRepository.softDelete(stageToRemove.id);
     if (!deleteResponse.affected) {

@@ -13,8 +13,7 @@ class CardController {
 
     const schema = yup.object().shape({
       name: yup.string().required(),
-      stage: yup.object().shape({
-        id: yup.string()}),
+      stage:  yup.string(),
       description: yup.string().required(),
       concluded_at: yup.date(),
     });
@@ -27,11 +26,7 @@ class CardController {
 
     const resourceCardRepository = APPDataSource.getRepository(Card);
 
-    const cardAlreadyExists = await resourceCardRepository.findOne({ where: { name: name } });
-
-    if (cardAlreadyExists) {
-      return response.status(400).json({status: "cartão já existe!"});
-    }
+    
     
     const card = resourceCardRepository.create({
       name,
@@ -78,10 +73,7 @@ class CardController {
       name: yup.string().required(),
       description: yup.string().required(),
       concluded_at: yup.date(),
-      stage: yup.object().shape({
-        id: yup.string(),
-       
-      }).required(),
+      stage: yup.string().required(),
     });
 
     try {
