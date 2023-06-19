@@ -3,8 +3,6 @@ import { DataSource } from 'typeorm';
 import { Profile } from '../models/Profile';
 import { Demand } from '../models/Demand';
 import { Stage } from '../models/Stage';
-import { Tag } from '../models/Tag';
-import { Comment } from '../models/Comment';
 import { Card } from '../models/Card';
 import { UsersDemand } from '../models/UsersDemand';
 require('dotenv').config();
@@ -20,7 +18,7 @@ export const APPDataSource = new DataSource({
   database: process.env.DB_DATABASE,
   synchronize: true,
   logging: false,
-  entities: [Profile, Demand, Stage, Tag,  Comment, Card, UsersDemand],
+  entities: [Profile, Demand, Stage,    Card, UsersDemand],
   //  migrations: [CreateUsuarios1656685284937],
   subscribers: [],
 });

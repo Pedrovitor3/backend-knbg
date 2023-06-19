@@ -9,13 +9,15 @@ class CardController {
   
   async create(request: Request, response: Response, next: NextFunction) {
     
-    const { name, description, concluded_at, stage } = request.body;
+    const { name, description, concluded_at, stage, tag, comment } = request.body;
 
     const schema = yup.object().shape({
       name: yup.string().required(),
       stage:  yup.string(),
       description: yup.string().required(),
+      tag: yup.string(),
       concluded_at: yup.date(),
+      comment: yup.string(),
     });
 
     try {
@@ -33,7 +35,8 @@ class CardController {
       stage,
       description,
       concluded_at,
-      
+      tag,
+      comment,
     });
 
     await resourceCardRepository.save(card);
@@ -66,7 +69,7 @@ class CardController {
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { name, description, concluded_at, stage } = request.body;
+    const { name, description, concluded_at, stage, tag, comment} = request.body;
     const id = request.params.id;
 
     const schema = yup.object().shape({
@@ -74,6 +77,8 @@ class CardController {
       description: yup.string().required(),
       concluded_at: yup.date(),
       stage: yup.string().required(),
+      tag: yup.string(),
+      comment: yup.string(),
     });
 
     try {
@@ -106,6 +111,8 @@ class CardController {
       stage,
       description,
       concluded_at,
+      tag,
+      comment,
     });
     
     return response.status(200).json(card);

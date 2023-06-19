@@ -3,8 +3,6 @@ import { ProfileController } from './controllers/ProfileController';
 import { } from './Utils/functionsToken';
 import { DemandController } from './controllers/DemandController';
 import { StageController } from './controllers/StageController';
-import { TagController } from './controllers/TagController';
-import { CommentController } from './controllers/CommentController';
 import { CardController } from './controllers/CardController';
 
 
@@ -12,8 +10,6 @@ const router = Router();
 const profileController = new ProfileController();
 const demandController = new DemandController();
 const stageController = new StageController();
-const tagController = new TagController();
-const commentController = new CommentController();
 const cardController = new CardController();
 
 /*
@@ -50,22 +46,6 @@ router.get("/stage/:id", stageController.one);
 router.put("/stage/:id", stageController.update);
 router.delete("/stage/:id", stageController.remove);
 router.patch("/stage/:id", stageController.restore);
-
-//TAG
-router.post("/tag", tagController.create);
-router.get("/tag", tagController.all);
-router.get("/tag/:id", tagController.one);
-router.put("/tag/:id", tagController.update);
-router.delete("/tag/:id", tagController.remove);
-router.patch("/tag/:id", tagController.restore);
-
-//COMMENT
-router.post("/comment", commentController.create);
-router.get("/comment", commentController.all);
-router.get("/comment/:id", commentController.one);
-router.put("/comment/:id", commentController.update);
-router.delete("/comment/:id", commentController.remove);
-router.patch("/comment/:id", commentController.restore);
 
 
 //CARD
