@@ -1,14 +1,8 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuid } from 'uuid';
+import { Tag } from "./Tag";
 import { Stage } from "./Stage";
-
-enum Tag {
-  nenhuma ='nenhuma',
-  importante = 'importante',
-  erro = 'erro',
- 
-}
-
+import { Comment } from "./Comment";
 
 @Entity("card") 
 export class Card {
@@ -25,11 +19,16 @@ export class Card {
   @Column({nullable: true})
   concluded_at:Date;
 
-  @Column({type: 'enum', enum: Tag, default: Tag.nenhuma })
+  @ManyToOne((type) => Tag, (tag) => tag.cards, {
+    eager: true, nullable: true
+  })
+  @JoinTable()
   tag: Tag;
 
-  @Column({nullable: true})
-  comment: string;
+  @ManyToOne(() => Comment, (comment) => comment.card, {
+    eager: true, nullable: true
+  })
+  comment: Comment;
 
 
   @ManyToOne(() => Stage,(stage) => stage.cards, { nullable: false})

@@ -9,14 +9,14 @@ class CardController {
   
   async create(request: Request, response: Response, next: NextFunction) {
     
-    const { name, description, concluded_at, stage, tag, comment } = request.body;
+    const { name, description, concluded_at, stage, tag, comment} = request.body;
 
     const schema = yup.object().shape({
       name: yup.string().required(),
       stage:  yup.string(),
       description: yup.string().required(),
-      tag: yup.string(),
       concluded_at: yup.date(),
+      tag: yup.string(),
       comment: yup.string(),
     });
 
@@ -28,8 +28,6 @@ class CardController {
 
     const resourceCardRepository = APPDataSource.getRepository(Card);
 
-    
-    
     const card = resourceCardRepository.create({
       name,
       stage,
@@ -114,6 +112,8 @@ class CardController {
       tag,
       comment,
     });
+
+    
     
     return response.status(200).json(card);
 
@@ -138,21 +138,6 @@ class CardController {
   }
 
   async restore(request: Request, response: Response, next: NextFunction) {
-    const resourceCardRepository = APPDataSource.getRepository(Card);
-
-    let cardToRestore = await resourceCardRepository.findOne({ where: { id: request.params.id }, withDeleted: true });
-
-    if (!cardToRestore) {
-      return response.status(400).json({status: "cartão não encontrado!"});
-    }
-    
-    const restoreResponse = await resourceCardRepository.restore(cardToRestore.id);
-
-    if (restoreResponse.affected) {
-      return response.status(200).json({status: "cartão recuperado!"});
-    }
-
-    return response.json(resourceCardRepository);
   }
 
   async paginar(request: Request, response: Response, next: NextFunction) {
