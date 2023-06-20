@@ -22,7 +22,6 @@ export class Card {
   @ManyToOne((type) => Tag, (tag) => tag.cards, {
     eager: true, nullable: true
   })
-  @JoinTable()
   tag: Tag;
 
   @ManyToOne(() => Comment, (comment) => comment.card, {

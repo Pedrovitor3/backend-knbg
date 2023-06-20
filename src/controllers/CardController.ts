@@ -13,7 +13,7 @@ class CardController {
 
     const schema = yup.object().shape({
       name: yup.string().required(),
-      stage:  yup.string(),
+      stage:  yup.string().required(),
       description: yup.string().required(),
       concluded_at: yup.date(),
       tag: yup.string(),
@@ -61,6 +61,7 @@ class CardController {
 
     const one = await resourceCardRepository.findOne({ where: { id: id }, relations: {
       stage: true,
+      
     } });
 
     return response.json(one);
@@ -113,8 +114,6 @@ class CardController {
       comment,
     });
 
-    
-    
     return response.status(200).json(card);
 
   }
