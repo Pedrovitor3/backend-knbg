@@ -20,7 +20,7 @@ export class Card {
   concluded_at:Date;
 
   @ManyToOne(() => Tag, (tag) => tag.cards, {
-    eager: true, nullable: true
+    eager: true, nullable: true, cascade: true
   })
   tag: Tag;
 

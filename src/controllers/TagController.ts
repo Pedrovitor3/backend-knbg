@@ -77,11 +77,7 @@ class TagController {
 
     const resourceTagRepository = APPDataSource.getRepository(Tag);
 
-    const tagAlreadyExists = await resourceTagRepository.findOne({ where: { name: name } });
-
-    if (tagAlreadyExists) {
-      return response.status(400).json({status: "cartão já existe!"});
-    }
+    
 
     const tag = await resourceTagRepository.update({
       id
