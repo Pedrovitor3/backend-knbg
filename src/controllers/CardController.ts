@@ -34,7 +34,6 @@ class CardController {
       description,
       concluded_at,
       tag,
-      comment,
     });
 
     await resourceCardRepository.save(card);
@@ -77,7 +76,6 @@ class CardController {
       concluded_at: yup.date(),
       stage: yup.string().required(),
       tag: yup.string(),
-      comment: yup.string(),
     });
 
     try {
@@ -88,7 +86,6 @@ class CardController {
 
     const resourceCardRepository = APPDataSource.getRepository(Card);
 
-    
 
     const cardFull = await resourceCardRepository.findOne({
       where: {id:id},
@@ -111,7 +108,6 @@ class CardController {
       description,
       concluded_at,
       tag,
-      comment,
     });
 
     return response.status(200).json(card);

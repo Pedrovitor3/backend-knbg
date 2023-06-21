@@ -19,7 +19,7 @@ export class Card {
   @Column({nullable: true})
   concluded_at:Date;
 
-  @ManyToOne((type) => Tag, (tag) => tag.cards, {
+  @ManyToOne(() => Tag, (tag) => tag.cards, {
     eager: true, nullable: true
   })
   tag: Tag;
