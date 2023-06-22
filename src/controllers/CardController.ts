@@ -16,8 +16,8 @@ class CardController {
       stage:  yup.string().required(),
       description: yup.string().required(),
       concluded_at: yup.date(),
-      tag: yup.string(),
-      comment: yup.string(),
+      tag: yup.string().nullable(),
+      comment: yup.string().nullable(),
     });
 
     try {
@@ -34,6 +34,7 @@ class CardController {
       description,
       concluded_at,
       tag,
+      comment,
     });
 
     await resourceCardRepository.save(card);
@@ -75,7 +76,8 @@ class CardController {
       description: yup.string().required(),
       concluded_at: yup.date(),
       stage: yup.string().required(),
-      tag: yup.string(),
+      tag: yup.string().nullable(),
+      comment: yup.string().nullable(),
     });
 
     try {
@@ -108,6 +110,7 @@ class CardController {
       description,
       concluded_at,
       tag,
+      comment,
     });
 
     return response.status(200).json(card);

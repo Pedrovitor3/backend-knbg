@@ -2,7 +2,6 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, JoinTab
 import { v4 as uuid } from 'uuid';
 import { Tag } from "./Tag";
 import { Stage } from "./Stage";
-import { Comment } from "./Comment";
 
 @Entity("card") 
 export class Card {
@@ -15,6 +14,9 @@ export class Card {
 
   @Column({ type: 'text'})
   description: string;
+  
+  @Column({nullable: true})
+  comment: string;
 
   @Column({nullable: true})
   concluded_at:Date;
@@ -24,10 +26,8 @@ export class Card {
   })
   tag: Tag;
 
-  @ManyToOne(() => Comment, (comment) => comment.card, {
-    eager: true, nullable: true
-  })
-  comment: Comment;
+  
+
 
 
   @ManyToOne(() => Stage,(stage) => stage.cards, { nullable: false})
